@@ -2,12 +2,12 @@
 
 Transform [HAST][] to [Parse5’s AST][ast].
 
-Why not use an adapter? Because it’s more code weight to use adapters,
+Why not use an adapter?  Because it’s more code weight to use adapters,
 and much more fragile.
 
 ## Installation
 
-[npm][npm-install]:
+[npm][]:
 
 ```bash
 npm install hast-util-to-parse5
@@ -15,21 +15,17 @@ npm install hast-util-to-parse5
 
 ## Usage
 
-Dependencies:
-
 ```javascript
 var toParse5 = require('hast-util-to-parse5');
-```
 
-Fixture:
-
-```javascript
 var ast = toParse5({
   type: 'element',
   tagName: 'h1',
   properties: {},
   children: [{type: 'text', value: 'World!'}]
 });
+
+console.log(ast);
 ```
 
 Yields:
@@ -63,7 +59,7 @@ Parse5 adapter.
 
 [codecov]: https://codecov.io/github/wooorm/hast-util-to-parse5
 
-[npm-install]: https://docs.npmjs.com/cli/install
+[npm]: https://docs.npmjs.com/cli/install
 
 [license]: LICENSE
 
