@@ -67,9 +67,9 @@ test('element', function (t) {
       type: 'element',
       tagName: 'svg',
       properties: {
-        'width': 230,
-        'height': 120,
-        'xmlns': 'http://www.w3.org/2000/svg',
+        width: 230,
+        height: 120,
+        xmlns: 'http://www.w3.org/2000/svg',
         'xmlns:xlink': 'http://www.w3.org/1999/xlink'
       },
       children: [

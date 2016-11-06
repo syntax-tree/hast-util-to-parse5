@@ -1,11 +1,3 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module hast-util-to-parse5
- * @fileoverview Transform HAST to Parse5’s AST.
- */
-
 'use strict';
 
 /* Dependencies. */
@@ -47,7 +39,7 @@ var attributeSpaces = {
   'xml:base': {prefix: 'xml', name: 'base', namespace: NS.xml},
   'xml:lang': {prefix: 'xml', name: 'lang', namespace: NS.xml},
   'xml:space': {prefix: 'xml', name: 'space', namespace: NS.xml},
-  'xmlns': {prefix: '', name: 'xmlns', namespace: NS.xmlns},
+  xmlns: {prefix: '', name: 'xmlns', namespace: NS.xmlns},
   'xmlns:xlink': {prefix: 'xmlns', name: 'xlink', namespace: NS.xmlns}
 };
 
