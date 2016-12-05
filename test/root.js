@@ -21,7 +21,7 @@ test('root', function (t) {
     'should transform a root (quirksMode)'
   );
 
-  ast.quirksMode = false;
+  ast.mode = 'no-quirks';
 
   t.deepEqual(
     toParse5({

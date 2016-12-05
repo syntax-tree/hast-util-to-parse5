@@ -65,7 +65,7 @@ function root(node) {
 
   return {
     nodeName: '#document',
-    quirksMode: qs,
+    mode: qs ? 'quirks' : 'no-quirks',
     childNodes: all(node)
   };
 }
