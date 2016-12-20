@@ -51,13 +51,13 @@ Parse5 adapter.
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/wooorm/hast-util-to-parse5.svg
+[travis-badge]: https://img.shields.io/travis/syntax-tree/hast-util-to-parse5.svg
 
-[travis]: https://travis-ci.org/wooorm/hast-util-to-parse5
+[travis]: https://travis-ci.org/syntax-tree/hast-util-to-parse5
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/hast-util-to-parse5.svg
+[codecov-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hast-util-to-parse5.svg
 
-[codecov]: https://codecov.io/github/wooorm/hast-util-to-parse5
+[codecov]: https://codecov.io/github/syntax-tree/hast-util-to-parse5
 
 [npm]: https://docs.npmjs.com/cli/install
 
@@ -65,8 +65,8 @@ Parse5 adapter.
 
 [author]: http://wooorm.com
 
-[hast]: https://github.com/wooorm/hast
+[hast]: https://github.com/syntax-tree/hast
 
 [ast]: https://github.com/inikulin/parse5/wiki/Documentation
 
-[node]: https://github.com/wooorm/hast#ast
+[node]: https://github.com/syntax-tree/hast#ast
