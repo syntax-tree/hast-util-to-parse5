@@ -12,6 +12,7 @@ test('position', function (t) {
 
   node = node.childNodes[0];
   delete node.parentNode;
+  delete node.__location.startTag;
 
   t.deepEqual(
     inspect(toParse5({
@@ -27,9 +28,7 @@ test('position', function (t) {
       }],
       position: {
         start: {line: 1, column: 1, offset: 0},
-        /* `4`, instead of `9`, is a bug in parse5:
-         * https://github.com/inikulin/parse5/issues/109 */
-        end: {line: 1, column: 10, offset: 4}
+        end: {line: 1, column: 10, offset: 9}
       }
     }), {depth: null}),
     inspect(node, {depth: null}),
