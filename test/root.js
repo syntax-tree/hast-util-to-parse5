@@ -1,11 +1,9 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var parse5 = require('parse5');
 var toParse5 = require('..');
 
-/* Tests. */
 test('root', function (t) {
   var ast = parse5.parse('');
 

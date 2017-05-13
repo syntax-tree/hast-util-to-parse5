@@ -1,6 +1,5 @@
 'use strict';
 
-/* Dependencies. */
 var xtend = require('xtend');
 var toH = require('hast-to-hyperscript');
 var NS = require('web-namespaces');
@@ -8,10 +7,8 @@ var has = require('has');
 var zwitch = require('zwitch');
 var mapz = require('mapz');
 
-/* Expose. */
 module.exports = transform;
 
-/* Construct. */
 var one = zwitch('type');
 var all = mapz(one, {key: 'children', indices: false});
 
@@ -43,22 +40,11 @@ var attributeSpaces = {
   'xmlns:xlink': {prefix: 'xmlns', name: 'xlink', namespace: NS.xmlns}
 };
 
-/**
- * Transform a tree from HAST to Parse5’s AST.
- *
- * @param {HASTNode} tree - HAST tree.
- * @return {ASTNode} - Parse5 tree.
- */
+/* Transform a tree from HAST to Parse5’s AST. */
 function transform(tree) {
   return patch(one(tree), null, NS.html);
 }
 
-/**
- * Transform a root from HAST to Parse5.
- *
- * @param {HASTRoot} node - HAST root.
- * @return {ASTNode.<Document>} - Parse5 document.
- */
 function root(node) {
   var data = node.data || {};
   var qs = has(data, 'quirksMode') ? Boolean(data.quirksMode) : false;
@@ -70,12 +56,6 @@ function root(node) {
   };
 }
 
-/**
- * Transform an element from HAST to Parse5.
- *
- * @param {HASTElement} node - HAST element.
- * @return {ASTNode.<Element>} - Parse5 element.
- */
 function element(node) {
   var shallow = xtend(node);
 
@@ -108,12 +88,6 @@ function element(node) {
   }, shallow);
 }
 
-/**
- * Transform a doctype from HAST to Parse5.
- *
- * @param {HASTDoctype} node - HAST doctype.
- * @return {ASTNode.<DocumentType>} - Parse5 doctype.
- */
 function doctype(node) {
   return wrap(node, {
     nodeName: '#documentType',
@@ -123,12 +97,6 @@ function doctype(node) {
   });
 }
 
-/**
- * Transform a text from HAST to Parse5.
- *
- * @param {HASTText} node - HAST text.
- * @return {ASTNode.<Text>} - Parse5 text.
- */
 function text(node) {
   return wrap(node, {
     nodeName: '#text',
@@ -136,12 +104,6 @@ function text(node) {
   });
 }
 
-/**
- * Transform a comment from HAST to Parse5.
- *
- * @param {HASTComment} node - HAST comment.
- * @return {ASTNode.<Comment>} - Parse5 comment.
- */
 function comment(node) {
   return wrap(node, {
     nodeName: '#comment',
@@ -149,13 +111,7 @@ function comment(node) {
   });
 }
 
-/**
- * Patch position.
- *
- * @param {HASTNode} node - HAST node.
- * @param {ASTNode} node - Parse5 node.
- * @return {ASTNode} - Given Parse5 node.
- */
+/* Patch position. */
 function wrap(node, ast) {
   if (node.position && node.position.start && node.position.end) {
     ast.__location = {
@@ -169,15 +125,8 @@ function wrap(node, ast) {
   return ast;
 }
 
-/**
- * Patch a tree recursively, by adding namespaces
- * and parent references where needed.
- *
- * @param {ASTNode} node - Parse5 node.
- * @param {ASTNode} parent - Parent of `node`.
- * @param {string} ns - Current namespace.
- * @return {ASTNode} - Patched replacement for `node`.
- */
+/* Patch a tree recursively, by adding namespaces
+ * and parent references where needed. */
 function patch(node, parent, ns) {
   var location = node.__location;
   var children = node.childNodes;

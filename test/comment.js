@@ -1,11 +1,9 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var parse5 = require('parse5');
 var toParse5 = require('..');
 
-/* Tests. */
 test('comment', function (t) {
   var node = parse5.parseFragment('<!--Alpha-->');
 

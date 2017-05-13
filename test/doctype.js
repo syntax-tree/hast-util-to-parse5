@@ -1,11 +1,9 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var parse5 = require('parse5');
 var toParse5 = require('..');
 
-/* Tests. */
 test('doctype', function (t) {
   var node = parse5.parse('<!DOCTYPE html SYSTEM "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd">');
 
