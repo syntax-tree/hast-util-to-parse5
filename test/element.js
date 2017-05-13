@@ -59,8 +59,8 @@ test('element', function (t) {
       type: 'element',
       tagName: 'svg',
       properties: {
-        width: 230,
-        height: 120,
+        width: '230',
+        height: '120',
         xmlns: 'http://www.w3.org/2000/svg',
         'xmlns:xlink': 'http://www.w3.org/1999/xlink'
       },
@@ -69,9 +69,9 @@ test('element', function (t) {
           type: 'element',
           tagName: 'circle',
           properties: {
-            cx: 60,
-            cy: 60,
-            r: 50,
+            cx: '60',
+            cy: '60',
+            r: '50',
             fill: 'red'
           },
           children: []
@@ -80,9 +80,9 @@ test('element', function (t) {
           type: 'element',
           tagName: 'circle',
           properties: {
-            cx: 170,
-            cy: 60,
-            r: 50,
+            cx: '170',
+            cy: '60',
+            r: '50',
             fill: 'green'
           },
           children: []
