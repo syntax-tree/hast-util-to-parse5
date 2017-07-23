@@ -3,12 +3,12 @@
 var xtend = require('xtend');
 var toH = require('hast-to-hyperscript');
 var NS = require('web-namespaces');
-var has = require('has');
 var zwitch = require('zwitch');
 var mapz = require('mapz');
 
 module.exports = transform;
 
+var own = {}.hasOwnProperty;
 var one = zwitch('type');
 var all = mapz(one, {key: 'children', indices: false});
 
@@ -47,7 +47,7 @@ function transform(tree) {
 
 function root(node) {
   var data = node.data || {};
-  var qs = has(data, 'quirksMode') ? Boolean(data.quirksMode) : false;
+  var qs = own.call(data, 'quirksMode') ? Boolean(data.quirksMode) : false;
 
   return {
     nodeName: '#document',
@@ -66,7 +66,7 @@ function element(node) {
     var key;
 
     for (key in attrs) {
-      if (has(attributeSpaces, key)) {
+      if (own.call(attributeSpaces, key)) {
         values.push(xtend({
           name: key,
           value: attrs[key]
@@ -142,11 +142,11 @@ function patch(node, parent, ns) {
     }
   }
 
-  if (has(namespaces, name)) {
+  if (own.call(namespaces, name)) {
     ns = namespaces[name];
   }
 
-  if (has(replacement, 'tagName')) {
+  if (own.call(replacement, 'tagName')) {
     replacement.namespaceURI = ns;
   }
 
