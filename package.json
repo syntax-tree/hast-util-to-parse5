@@ -9,14 +9,14 @@
     "ast",
     "utility"
   ],
-  "files": [
-    "index.js"
-  ],
-  "repository": "https://github.com/syntax-tree/hast-util-to-parse5",
+  "repository": "syntax-tree/hast-util-to-parse5",
   "bugs": "https://github.com/syntax-tree/hast-util-to-parse5/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
   ],
   "dependencies": {
     "has": "^1.0.1",
