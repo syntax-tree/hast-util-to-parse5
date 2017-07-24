@@ -91,5 +91,59 @@ test('element', function (t) {
     'should transform foreign elements'
   );
 
+  node = parse5.parseFragment('<template id="a">Alpha</template>');
+
+  node = node.childNodes[0];
+  delete node.parentNode;
+
+  t.deepEqual(
+    inspect(toParse5({
+      type: 'element',
+      tagName: 'template',
+      properties: {id: 'a'},
+      children: [],
+      content: {
+        type: 'root',
+        children: [{type: 'text', value: 'Alpha'}]
+      }
+    }), {depth: null}),
+    inspect(node, {depth: null}),
+    'should transform templates with text'
+  );
+
+  node = parse5.parseFragment('<template id="b"><b>bold</b> and <i>italic</i></template>');
+
+  node = node.childNodes[0];
+  delete node.parentNode;
+
+  t.deepEqual(
+    inspect(toParse5({
+      type: 'element',
+      tagName: 'template',
+      properties: {id: 'b'},
+      children: [],
+      content: {
+        type: 'root',
+        children: [
+          {
+            type: 'element',
+            tagName: 'b',
+            properties: {},
+            children: [{type: 'text', value: 'bold'}]
+          },
+          {type: 'text', value: ' and '},
+          {
+            type: 'element',
+            tagName: 'i',
+            properties: {},
+            children: [{type: 'text', value: 'italic'}]
+          }
+        ]
+      }
+    }), {depth: null}),
+    inspect(node, {depth: null}),
+    'should transform templates with elements'
+  );
+
   t.end();
 });

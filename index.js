@@ -12,6 +12,8 @@ var own = {}.hasOwnProperty;
 var one = zwitch('type');
 var all = mapz(one, {key: 'children', indices: false});
 
+var customProps = ['__location', 'childNodes', 'content', 'parentNode', 'namespaceURI'];
+
 one.handlers.root = root;
 one.handlers.element = element;
 one.handlers.text = text;
@@ -63,6 +65,7 @@ function element(node) {
 
   return toH(function (name, attrs) {
     var values = [];
+    var content;
     var key;
 
     for (key in attrs) {
@@ -79,12 +82,18 @@ function element(node) {
       }
     }
 
+    if (name === 'template') {
+      content = transform(shallow.content);
+      delete content.mode;
+      content.nodeName = '#document-fragment';
+    }
+
     return wrap(node, {
       nodeName: node.tagName,
       tagName: node.tagName,
       attrs: values,
       childNodes: node.children ? all(node) : []
-    });
+    }, content);
   }, shallow);
 }
 
@@ -112,7 +121,7 @@ function comment(node) {
 }
 
 /* Patch position. */
-function wrap(node, ast) {
+function wrap(node, ast, content) {
   if (node.position && node.position.start && node.position.end) {
     ast.__location = {
       line: node.position.start.line,
@@ -120,6 +129,10 @@ function wrap(node, ast) {
       startOffset: node.position.start.offset,
       endOffset: node.position.end.offset
     };
+  }
+
+  if (content) {
+    ast.content = content;
   }
 
   return ast;
@@ -137,7 +150,7 @@ function patch(node, parent, ns) {
   var key;
 
   for (key in node) {
-    if (key !== '__location' && key !== 'childNodes') {
+    if (customProps.indexOf(key) === -1) {
       replacement[key] = node[key];
     }
   }
@@ -158,6 +171,10 @@ function patch(node, parent, ns) {
     while (++index < length) {
       children[index] = patch(children[index], replacement, ns);
     }
+  }
+
+  if (name === 'template') {
+    replacement.content = patch(node.content, null, ns);
   }
 
   if (parent) {
