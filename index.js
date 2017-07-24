@@ -66,20 +66,17 @@ function element(node) {
   return toH(function (name, attrs) {
     var values = [];
     var content;
+    var value;
     var key;
 
     for (key in attrs) {
+      value = {name: key, value: attrs[key]};
+
       if (own.call(attributeSpaces, key)) {
-        values.push(xtend({
-          name: key,
-          value: attrs[key]
-        }, attributeSpaces[key]));
-      } else {
-        values.push({
-          name: key,
-          value: attrs[key]
-        });
+        value = xtend(value, attributeSpaces[key]);
       }
+
+      values.push(value);
     }
 
     if (name === 'template') {
