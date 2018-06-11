@@ -13,7 +13,7 @@ var one = zwitch('type')
 var all = mapz(one, {key: 'children', indices: false})
 
 var customProps = [
-  '__location',
+  'sourceCodeLocation',
   'childNodes',
   'content',
   'parentNode',
@@ -108,8 +108,8 @@ function doctype(node) {
   return wrap(node, {
     nodeName: '#documentType',
     name: node.name,
-    publicId: node.public || null,
-    systemId: node.system || null
+    publicId: node.public || '',
+    systemId: node.system || ''
   })
 }
 
@@ -129,12 +129,16 @@ function comment(node) {
 
 /* Patch position. */
 function wrap(node, ast, content) {
-  if (node.position && node.position.start && node.position.end) {
-    ast.__location = {
-      line: node.position.start.line,
-      col: node.position.start.column,
-      startOffset: node.position.start.offset,
-      endOffset: node.position.end.offset
+  var position = node.position
+
+  if (position && position.start && position.end) {
+    ast.sourceCodeLocation = {
+      startLine: position.start.line,
+      startCol: position.start.column,
+      startOffset: position.start.offset,
+      endLine: position.end.line,
+      endCol: position.end.column,
+      endOffset: position.end.offset
     }
   }
 
@@ -148,7 +152,7 @@ function wrap(node, ast, content) {
 /* Patch a tree recursively, by adding namespaces
  * and parent references where needed. */
 function patch(node, parent, ns) {
-  var location = node.__location
+  var location = node.sourceCodeLocation
   var children = node.childNodes
   var name = node.tagName
   var replacement = {}
@@ -189,7 +193,7 @@ function patch(node, parent, ns) {
   }
 
   if (location) {
-    replacement.__location = location
+    replacement.sourceCodeLocation = location
   }
 
   return replacement
