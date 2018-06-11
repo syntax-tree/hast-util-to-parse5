@@ -16,16 +16,16 @@ npm install hast-util-to-parse5
 ## Usage
 
 ```javascript
-var toParse5 = require('hast-util-to-parse5');
+var toParse5 = require('hast-util-to-parse5')
 
 var ast = toParse5({
   type: 'element',
   tagName: 'h1',
   properties: {},
   children: [{type: 'text', value: 'World!'}]
-});
+})
 
-console.log(ast);
+console.log(ast)
 ```
 
 Yields:
