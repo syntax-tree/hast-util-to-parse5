@@ -40,10 +40,19 @@ Yields:
 
 ## API
 
-### `toParse5(node)`
+### `toParse5(tree[, space])`
 
 Transform a [HAST Node][node] to an `ASTNode` according to the default
 Parse5 adapter.
+
+###### `space`
+
+Whether the root of the given tree is in the `'html'` or `'svg'` space (enum,
+`'svg'` or `'html'`, default: `'html'`).
+
+If an `svg` element is found in the HTML space, `toParse5` automatically
+switches to the SVG space when entering the element, and switches back when
+leaving.
 
 ## Contribute
 
