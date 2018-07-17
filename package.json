@@ -27,7 +27,6 @@
   },
   "devDependencies": {
     "browserify": "^16.0.0",
-    "esmangle": "^1.0.1",
     "json-stringify-safe": "^5.0.1",
     "nyc": "^12.0.0",
     "parse5": "^5.0.0",
@@ -35,12 +34,13 @@
     "remark-cli": "^5.0.0",
     "remark-preset-wooorm": "^4.0.0",
     "tape": "^4.0.0",
+    "tinyify": "^2.4.3",
     "xo": "^0.21.0"
   },
   "scripts": {
     "format": "remark . -qfo && prettier --write '**/*.js' && xo --fix",
-    "build-bundle": "browserify index.js --bare -s hastUtilToParse5 > hast-util-to-parse5.js",
-    "build-mangle": "esmangle hast-util-to-parse5.js > hast-util-to-parse5.min.js",
+    "build-bundle": "browserify index.js -s hastUtilToParse5 > hast-util-to-parse5.js",
+    "build-mangle": "browserify index.js -p tinyify -s hastUtilToParse5 > hast-util-to-parse5.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test",
