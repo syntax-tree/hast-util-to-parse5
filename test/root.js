@@ -2,33 +2,61 @@
 
 var test = require('tape')
 var parse5 = require('parse5')
+var json = require('./json')
 var toParse5 = require('..')
 
 test('root', function(t) {
-  var ast = parse5.parse('')
+  t.test('should transform a root (quirks)', function(st) {
+    var expected = parse5.parse('')
 
-  ast.childNodes = []
+    st.deepEqual(
+      json(
+        toParse5({
+          type: 'root',
+          data: {quirksMode: true},
+          children: [
+            {
+              type: 'element',
+              tagName: 'html',
+              children: [
+                {type: 'element', tagName: 'head', children: []},
+                {type: 'element', tagName: 'body', children: []}
+              ]
+            }
+          ]
+        })
+      ),
+      json(expected)
+    )
 
-  t.deepEqual(
-    toParse5({
-      type: 'root',
-      data: {quirksMode: true},
-      children: []
-    }),
-    ast,
-    'should transform a root (quirksMode)'
-  )
+    st.end()
+  })
 
-  ast.mode = 'no-quirks'
+  t.test('should transform a root (no-quirks)', function(st) {
+    var expected = parse5.parse('<!doctypehtml>')
 
-  t.deepEqual(
-    toParse5({
-      type: 'root',
-      children: []
-    }),
-    ast,
-    'should transform a root (non-quirksMode)'
-  )
+    st.deepEqual(
+      json(
+        toParse5({
+          type: 'root',
+          children: [
+            {type: 'doctype', name: 'html'},
+            {
+              type: 'element',
+              tagName: 'html',
+              children: [
+                {type: 'element', tagName: 'head', children: []},
+                {type: 'element', tagName: 'body', children: []}
+              ]
+            }
+          ]
+        })
+      ),
+      json(expected)
+    )
+
+    st.end()
+  })
 
   t.end()
 })

@@ -1,24 +1,18 @@
 'use strict'
 
 var xtend = require('xtend')
+var html = require('property-information/html')
+var svg = require('property-information/svg')
+var find = require('property-information/find')
 var toH = require('hast-to-hyperscript')
-var NS = require('web-namespaces')
+var ns = require('web-namespaces')
 var zwitch = require('zwitch')
-var mapz = require('mapz')
 
 module.exports = transform
 
-var own = {}.hasOwnProperty
-var one = zwitch('type')
-var all = mapz(one, {key: 'children', indices: false})
+var ignoredSpaces = ['svg', 'html']
 
-var customProps = [
-  'sourceCodeLocation',
-  'childNodes',
-  'content',
-  'parentNode',
-  'namespaceURI'
-]
+var one = zwitch('type')
 
 one.handlers.root = root
 one.handlers.element = element
@@ -26,113 +20,116 @@ one.handlers.text = text
 one.handlers.comment = comment
 one.handlers.doctype = doctype
 
-/* Map of tag-names starting new namespaces. */
-var namespaces = {
-  math: NS.mathml,
-  svg: NS.svg
+// Transform a tree from HAST to Parse5’s AST.
+function transform(tree, space) {
+  return one(tree, space === 'svg' ? svg : html)
 }
 
-/* Map of attributes with namespaces. */
-var attributeSpaces = {
-  'xlink:actuate': {prefix: 'xlink', name: 'actuate', namespace: NS.xlink},
-  'xlink:arcrole': {prefix: 'xlink', name: 'arcrole', namespace: NS.xlink},
-  'xlink:href': {prefix: 'xlink', name: 'href', namespace: NS.xlink},
-  'xlink:role': {prefix: 'xlink', name: 'role', namespace: NS.xlink},
-  'xlink:show': {prefix: 'xlink', name: 'show', namespace: NS.xlink},
-  'xlink:title': {prefix: 'xlink', name: 'title', namespace: NS.xlink},
-  'xlink:type': {prefix: 'xlink', name: 'type', namespace: NS.xlink},
-  'xml:base': {prefix: 'xml', name: 'base', namespace: NS.xml},
-  'xml:lang': {prefix: 'xml', name: 'lang', namespace: NS.xml},
-  'xml:space': {prefix: 'xml', name: 'space', namespace: NS.xml},
-  xmlns: {prefix: '', name: 'xmlns', namespace: NS.xmlns},
-  'xmlns:xlink': {prefix: 'xmlns', name: 'xlink', namespace: NS.xmlns}
-}
-
-/* Transform a tree from HAST to Parse5’s AST. */
-function transform(tree) {
-  return patch(one(tree), null, NS.html)
-}
-
-function root(node) {
+function root(node, schema) {
   var data = node.data || {}
-  var qs = own.call(data, 'quirksMode') ? Boolean(data.quirksMode) : false
+  var mode = data.quirksMode ? 'quirks' : 'no-quirks'
 
-  return {
-    nodeName: '#document',
-    mode: qs ? 'quirks' : 'no-quirks',
-    childNodes: all(node)
-  }
+  return patch(node, {nodeName: '#document', mode: mode}, schema)
 }
 
-function element(node) {
-  var shallow = xtend(node)
+function fragment(node, schema) {
+  return patch(node, {nodeName: '#document-fragment'}, schema)
+}
 
-  shallow.children = []
+function doctype(node, schema) {
+  return patch(
+    node,
+    {
+      nodeName: '#documentType',
+      name: node.name,
+      publicId: node.public || '',
+      systemId: node.system || ''
+    },
+    schema
+  )
+}
 
-  return toH(function(name, attrs) {
+function text(node, schema) {
+  return patch(node, {nodeName: '#text', value: node.value}, schema)
+}
+
+function comment(node, schema) {
+  return patch(node, {nodeName: '#comment', data: node.value}, schema)
+}
+
+function element(node, schema) {
+  var space = schema.space
+  var shallow = xtend(node, {children: []})
+
+  return toH(h, shallow, {space: space})
+
+  function h(name, attrs) {
     var values = []
-    var content
+    var p5
     var value
     var key
+    var info
+    var pos
 
     for (key in attrs) {
+      info = find(schema, key)
       value = {name: key, value: attrs[key]}
 
-      if (own.call(attributeSpaces, key)) {
-        value = xtend(value, attributeSpaces[key])
+      if (info.space && ignoredSpaces.indexOf(info.space) === -1) {
+        pos = key.indexOf(':')
+
+        if (pos === -1) {
+          value.prefix = ''
+        } else {
+          value.name = key.slice(pos + 1)
+          value.prefix = key.slice(0, pos)
+        }
+        value.namespace = ns[info.space]
       }
 
       values.push(value)
     }
 
+    p5 = patch(node, {nodeName: name, tagName: name, attrs: values}, schema)
+
     if (name === 'template') {
-      content = transform(shallow.content)
-      delete content.mode
-      content.nodeName = '#document-fragment'
+      p5.content = fragment(shallow.content, schema)
     }
 
-    return wrap(
-      node,
-      {
-        nodeName: node.tagName,
-        tagName: node.tagName,
-        attrs: values,
-        childNodes: node.children ? all(node) : []
-      },
-      content
-    )
-  }, shallow)
+    return p5
+  }
 }
 
-function doctype(node) {
-  return wrap(node, {
-    nodeName: '#documentType',
-    name: node.name,
-    publicId: node.public || '',
-    systemId: node.system || ''
-  })
-}
-
-function text(node) {
-  return wrap(node, {
-    nodeName: '#text',
-    value: node.value
-  })
-}
-
-function comment(node) {
-  return wrap(node, {
-    nodeName: '#comment',
-    data: node.value
-  })
-}
-
-/* Patch position. */
-function wrap(node, ast, content) {
+// Patch specific properties.
+function patch(node, p5, parentSchema) {
+  var schema = parentSchema
   var position = node.position
+  var children = node.children
+  var childNodes = []
+  var length = children ? children.length : 0
+  var index = -1
+  var child
+
+  if (node.type === 'element') {
+    if (schema.space === 'html' && node.tagName === 'svg') {
+      schema = svg
+    }
+
+    p5.namespaceURI = ns[schema.space]
+  }
+
+  while (++index < length) {
+    child = one(children[index], schema)
+    child.parentNode = p5
+    childNodes[index] = child
+  }
+
+  if (node.type === 'element' || node.type === 'root') {
+    p5.childNodes = childNodes
+  }
 
   if (position && position.start && position.end) {
-    ast.sourceCodeLocation = {
+    p5.sourceCodeLocation = {
       startLine: position.start.line,
       startCol: position.start.column,
       startOffset: position.start.offset,
@@ -142,59 +139,5 @@ function wrap(node, ast, content) {
     }
   }
 
-  if (content) {
-    ast.content = content
-  }
-
-  return ast
-}
-
-/* Patch a tree recursively, by adding namespaces
- * and parent references where needed. */
-function patch(node, parent, ns) {
-  var location = node.sourceCodeLocation
-  var children = node.childNodes
-  var name = node.tagName
-  var replacement = {}
-  var length
-  var index
-  var key
-
-  for (key in node) {
-    if (customProps.indexOf(key) === -1) {
-      replacement[key] = node[key]
-    }
-  }
-
-  if (own.call(namespaces, name)) {
-    ns = namespaces[name]
-  }
-
-  if (own.call(replacement, 'tagName')) {
-    replacement.namespaceURI = ns
-  }
-
-  if (children) {
-    replacement.childNodes = children
-    length = children.length
-    index = -1
-
-    while (++index < length) {
-      children[index] = patch(children[index], replacement, ns)
-    }
-  }
-
-  if (name === 'template') {
-    replacement.content = patch(node.content, null, ns)
-  }
-
-  if (parent) {
-    replacement.parentNode = parent
-  }
-
-  if (location) {
-    replacement.sourceCodeLocation = location
-  }
-
-  return replacement
+  return p5
 }

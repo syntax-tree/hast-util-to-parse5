@@ -1,170 +1,94 @@
 'use strict'
 
-var inspect = require('util').inspect
 var test = require('tape')
 var parse5 = require('parse5')
+var json = require('./json')
 var toParse5 = require('..')
 
 test('element', function(t) {
-  var node = parse5.parseFragment('<h1>Alpha')
+  t.test('should transform elements', function(st) {
+    var actual = toParse5({
+      type: 'element',
+      tagName: 'h1',
+      children: [{type: 'text', value: 'Alpha'}]
+    })
+    var expected = parse5.parseFragment('<h1>Alpha').childNodes[0]
 
-  node = node.childNodes[0]
-  delete node.parentNode
+    delete expected.parentNode
 
-  t.deepEqual(
-    inspect(
-      toParse5({
-        type: 'element',
-        tagName: 'h1',
-        children: [
-          {
-            type: 'text',
-            value: 'Alpha'
-          }
-        ]
-      }),
-      {depth: null}
-    ),
-    inspect(node, {depth: null}),
-    'should transform elements'
-  )
+    st.deepEqual(json(actual), json(expected))
 
-  node = parse5.parseFragment('<img src=# alt="">')
+    st.end()
+  })
 
-  node = node.childNodes[0]
-  delete node.parentNode
+  t.test('should transform void elements', function(st) {
+    var actual = toParse5({
+      type: 'element',
+      tagName: 'img',
+      properties: {src: '#', alt: ''}
+    })
+    var expected = parse5.parseFragment('<img src=# alt="">').childNodes[0]
 
-  t.deepEqual(
-    inspect(
-      toParse5({
-        type: 'element',
-        tagName: 'img',
-        properties: {
-          src: '#',
-          alt: ''
-        }
-      }),
-      {depth: null}
-    ),
-    inspect(node, {depth: null}),
-    'should transform void elements'
-  )
+    delete expected.parentNode
 
-  node = parse5.parseFragment(
-    [
-      '<svg width="230" height="120" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">',
-      '<circle cx="60"  cy="60" r="50" fill="red"/>',
-      '<circle cx="170" cy="60" r="50" fill="green"/>',
-      '</svg>'
-    ].join('')
-  )
+    st.deepEqual(json(actual), json(expected))
 
-  node = node.childNodes[0]
-  delete node.parentNode
+    st.end()
+  })
 
-  t.deepEqual(
-    inspect(
-      toParse5({
-        type: 'element',
-        tagName: 'svg',
-        properties: {
-          width: '230',
-          height: '120',
-          xmlns: 'http://www.w3.org/2000/svg',
-          'xmlns:xlink': 'http://www.w3.org/1999/xlink'
-        },
+  t.test('should transform templates with elements', function(st) {
+    var actual = toParse5({
+      type: 'element',
+      tagName: 'template',
+      properties: {id: 'a'},
+      content: {
+        type: 'root',
+        children: [{type: 'text', value: 'Alpha'}]
+      }
+    })
+    var expected = parse5.parseFragment('<template id="a">Alpha</template>')
+      .childNodes[0]
+
+    delete expected.parentNode
+
+    st.deepEqual(json(actual), json(expected))
+
+    st.end()
+  })
+
+  t.test('should transform templates with text', function(st) {
+    var actual = toParse5({
+      type: 'element',
+      tagName: 'template',
+      properties: {id: 'b'},
+      content: {
+        type: 'root',
         children: [
           {
             type: 'element',
-            tagName: 'circle',
-            properties: {
-              cx: '60',
-              cy: '60',
-              r: '50',
-              fill: 'red'
-            },
-            children: []
+            tagName: 'b',
+            children: [{type: 'text', value: 'bold'}]
           },
+          {type: 'text', value: ' and '},
           {
             type: 'element',
-            tagName: 'circle',
-            properties: {
-              cx: '170',
-              cy: '60',
-              r: '50',
-              fill: 'green'
-            },
-            children: []
+            tagName: 'i',
+            children: [{type: 'text', value: 'italic'}]
           }
         ]
-      }),
-      {depth: null}
-    ),
-    inspect(node, {depth: null}),
-    'should transform foreign elements'
-  )
+      }
+    })
 
-  node = parse5.parseFragment('<template id="a">Alpha</template>')
+    var expected = parse5.parseFragment(
+      '<template id="b"><b>bold</b> and <i>italic</i></template>'
+    ).childNodes[0]
 
-  node = node.childNodes[0]
-  delete node.parentNode
+    delete expected.parentNode
 
-  t.deepEqual(
-    inspect(
-      toParse5({
-        type: 'element',
-        tagName: 'template',
-        properties: {id: 'a'},
-        children: [],
-        content: {
-          type: 'root',
-          children: [{type: 'text', value: 'Alpha'}]
-        }
-      }),
-      {depth: null}
-    ),
-    inspect(node, {depth: null}),
-    'should transform templates with text'
-  )
+    st.deepEqual(json(actual), json(expected))
 
-  node = parse5.parseFragment(
-    '<template id="b"><b>bold</b> and <i>italic</i></template>'
-  )
-
-  node = node.childNodes[0]
-  delete node.parentNode
-
-  t.deepEqual(
-    inspect(
-      toParse5({
-        type: 'element',
-        tagName: 'template',
-        properties: {id: 'b'},
-        children: [],
-        content: {
-          type: 'root',
-          children: [
-            {
-              type: 'element',
-              tagName: 'b',
-              properties: {},
-              children: [{type: 'text', value: 'bold'}]
-            },
-            {type: 'text', value: ' and '},
-            {
-              type: 'element',
-              tagName: 'i',
-              properties: {},
-              children: [{type: 'text', value: 'italic'}]
-            }
-          ]
-        }
-      }),
-      {depth: null}
-    ),
-    inspect(node, {depth: null}),
-    'should transform templates with elements'
-  )
+    st.end()
+  })
 
   t.end()
 })

@@ -5,17 +5,13 @@ var parse5 = require('parse5')
 var toParse5 = require('..')
 
 test('text', function(t) {
-  var node = parse5.parseFragment('Alpha')
+  var expected = parse5.parseFragment('Alpha').childNodes[0]
 
-  node = node.childNodes[0]
-  delete node.parentNode
+  delete expected.parentNode
 
   t.deepEqual(
-    toParse5({
-      type: 'text',
-      value: 'Alpha'
-    }),
-    node,
+    toParse5({type: 'text', value: 'Alpha'}),
+    expected,
     'should transform text'
   )
 

@@ -1,44 +1,40 @@
 'use strict'
 
-var inspect = require('util').inspect
 var test = require('tape')
 var parse5 = require('parse5')
+var json = require('./json')
 var toParse5 = require('..')
 
 test('position', function(t) {
-  var node = parse5.parseFragment('<h1>Alpha', {sourceCodeLocationInfo: true})
-
-  node = node.childNodes[0]
-  delete node.parentNode
-
-  /* Not possible yet to map this one. */
-  delete node.sourceCodeLocation.startTag
-
-  t.deepEqual(
-    inspect(
-      toParse5({
-        type: 'element',
-        tagName: 'h1',
-        children: [
-          {
-            type: 'text',
-            value: 'Alpha',
-            position: {
-              start: {line: 1, column: 5, offset: 4},
-              end: {line: 1, column: 10, offset: 9}
-            }
-          }
-        ],
+  var actual = toParse5({
+    type: 'element',
+    tagName: 'h1',
+    children: [
+      {
+        type: 'text',
+        value: 'Alpha',
         position: {
-          start: {line: 1, column: 1, offset: 0},
+          start: {line: 1, column: 5, offset: 4},
           end: {line: 1, column: 10, offset: 9}
         }
-      }),
-      {depth: null}
-    ),
-    inspect(node, {depth: null}),
-    'should transform positions'
-  )
+      }
+    ],
+    position: {
+      start: {line: 1, column: 1, offset: 0},
+      end: {line: 1, column: 10, offset: 9}
+    }
+  })
+
+  var expected = parse5.parseFragment('<h1>Alpha', {
+    sourceCodeLocationInfo: true
+  }).childNodes[0]
+
+  delete expected.parentNode
+
+  /* Not possible yet to map this one. */
+  delete expected.sourceCodeLocation.startTag
+
+  t.deepEqual(json(actual), json(expected), 'should transform positions')
 
   t.end()
 })

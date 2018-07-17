@@ -5,36 +5,33 @@ var parse5 = require('parse5')
 var toParse5 = require('..')
 
 test('doctype', function(t) {
-  var node = parse5.parse(
-    '<!DOCTYPE html SYSTEM "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd">'
-  )
-
-  node = node.childNodes[0]
-  delete node.parentNode
-
-  t.deepEqual(
-    toParse5({
+  t.test('should transform a doctype (legacy)', function(st) {
+    var actual = toParse5({
       type: 'doctype',
       name: 'html',
       system: 'http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd'
-    }),
-    node,
-    'should transform a doctype (legacy)'
-  )
+    })
+    var expected = parse5.parse(
+      '<!DOCTYPE html SYSTEM "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd">'
+    ).childNodes[0]
 
-  node = parse5.parse('<!doctype html>')
+    delete expected.parentNode
 
-  node = node.childNodes[0]
-  delete node.parentNode
+    st.deepEqual(actual, expected)
 
-  t.deepEqual(
-    toParse5({
-      type: 'doctype',
-      name: 'html'
-    }),
-    node,
-    'should transform a doctype (modern)'
-  )
+    st.end()
+  })
+
+  t.test('should transform a doctype (modern)', function(st) {
+    var actual = toParse5({type: 'doctype', name: 'html'})
+    var expected = parse5.parse('<!doctypehtml>').childNodes[0]
+
+    delete expected.parentNode
+
+    st.deepEqual(actual, expected)
+
+    st.end()
+  })
 
   t.end()
 })

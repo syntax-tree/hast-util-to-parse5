@@ -5,19 +5,12 @@ var parse5 = require('parse5')
 var toParse5 = require('..')
 
 test('comment', function(t) {
-  var node = parse5.parseFragment('<!--Alpha-->')
+  var actual = toParse5({type: 'comment', value: 'Alpha'})
+  var expected = parse5.parseFragment('<!--Alpha-->').childNodes[0]
 
-  node = node.childNodes[0]
-  delete node.parentNode
+  delete expected.parentNode
 
-  t.deepEqual(
-    toParse5({
-      type: 'comment',
-      value: 'Alpha'
-    }),
-    node,
-    'should transform comments'
-  )
+  t.deepEqual(actual, expected, 'should transform comments')
 
   t.end()
 })
