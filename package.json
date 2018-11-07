@@ -39,8 +39,8 @@
   },
   "scripts": {
     "format": "remark . -qfo && prettier --write '**/*.js' && xo --fix",
-    "build-bundle": "browserify index.js -s hastUtilToParse5 > hast-util-to-parse5.js",
-    "build-mangle": "browserify index.js -p tinyify -s hastUtilToParse5 > hast-util-to-parse5.min.js",
+    "build-bundle": "browserify . -s hastUtilToParse5 > hast-util-to-parse5.js",
+    "build-mangle": "browserify . -s hastUtilToParse5 -p tinyify > hast-util-to-parse5.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test",
