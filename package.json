@@ -19,8 +19,8 @@
     "index.js"
   ],
   "dependencies": {
-    "hast-to-hyperscript": "^5.0.0",
-    "property-information": "^4.0.0",
+    "hast-to-hyperscript": "^6.0.0",
+    "property-information": "^5.0.0",
     "web-namespaces": "^1.0.0",
     "xtend": "^4.0.1",
     "zwitch": "^1.0.0"
