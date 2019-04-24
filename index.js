@@ -84,6 +84,7 @@ function element(node, schema) {
           value.name = key.slice(pos + 1)
           value.prefix = key.slice(0, pos)
         }
+
         value.namespace = ns[info.space]
       }
 

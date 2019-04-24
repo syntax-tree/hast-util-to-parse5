@@ -9,3 +9,5 @@ require('./comment')
 require('./element')
 require('./position')
 require('./svg')
+
+/* eslint-enable import/no-unassigned-import */
