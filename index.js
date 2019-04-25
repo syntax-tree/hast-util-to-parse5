@@ -66,6 +66,7 @@ function element(node, schema) {
   function h(name, attrs) {
     var values = []
     var p5
+    var attr
     var value
     var key
     var info
@@ -73,7 +74,8 @@ function element(node, schema) {
 
     for (key in attrs) {
       info = find(schema, key)
-      value = {name: key, value: attrs[key]}
+      attr = attrs[key]
+      value = {name: key, value: attr === true ? '' : String(attr)}
 
       if (info.space && ignoredSpaces.indexOf(info.space) === -1) {
         pos = key.indexOf(':')
