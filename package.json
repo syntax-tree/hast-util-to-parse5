@@ -19,7 +19,7 @@
     "index.js"
   ],
   "dependencies": {
-    "hast-to-hyperscript": "^6.0.0",
+    "hast-to-hyperscript": "^7.0.0",
     "property-information": "^5.0.0",
     "web-namespaces": "^1.0.0",
     "xtend": "^4.0.1",

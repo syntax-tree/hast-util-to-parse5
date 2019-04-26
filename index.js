@@ -75,6 +75,11 @@ function element(node, schema) {
     for (key in attrs) {
       info = find(schema, key)
       attr = attrs[key]
+
+      if (attr === false || (info.boolean && !attr)) {
+        continue
+      }
+
       value = {name: key, value: attr === true ? '' : String(attr)}
 
       if (info.space && ignoredSpaces.indexOf(info.space) === -1) {
