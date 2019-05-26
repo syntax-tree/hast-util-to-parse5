@@ -3,24 +3,27 @@
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
 [![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Transform [HAST][] to [Parse5’s AST][ast].
+[**hast**][hast] utility to transform to [Parse5’s AST][ast].
 
-Why not use an adapter?  Because it’s more code weight to use adapters,
-and much more fragile.
+> **Q**: Why not use a Parse5 adapter?
+> **A**: Because it’s more code weight to use adapters, and much more fragile.
 
-## Installation
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install hast-util-to-parse5
 ```
 
 ## Usage
 
-```javascript
+```js
 var toParse5 = require('hast-util-to-parse5')
 
 var ast = toParse5({
@@ -47,25 +50,26 @@ Yields:
 
 ### `toParse5(tree[, space])`
 
-Transform a [HAST Node][node] to an `ASTNode` according to the default
-Parse5 adapter.
+Transform a [**hast**][hast] [*tree*][tree] to [Parse5’s AST][ast].
 
 ###### `space`
 
-Whether the root of the given tree is in the `'html'` or `'svg'` space (enum,
-`'svg'` or `'html'`, default: `'html'`).
+Whether the root of the given [*tree*][tree] is in the `'html'` or `'svg'` space
+(enum, `'svg'` or `'html'`, default: `'html'`).
 
 If an `svg` element is found in the HTML space, `toParse5` automatically
 switches to the SVG space when entering the element, and switches back when
-leaving.
+exiting.
 
 ## Contribute
 
-See [`contributing.md` in `syntax-tree/hast`][contributing] for ways to get
+See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
 started.
+See [`support.md`][support] for ways to get help.
 
-This organisation has a [Code of Conduct][coc].  By interacting with this
-repository, organisation, or community you agree to abide by its terms.
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -85,9 +89,19 @@ repository, organisation, or community you agree to abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/hast-util-to-parse5
 
+[size-badge]: https://img.shields.io/bundlephobia/minzip/hast-util-to-parse5.svg
+
+[size]: https://bundlephobia.com/result?p=hast-util-to-parse5
+
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
-[chat]: https://spectrum.chat/unified/rehype
+[chat]: https://spectrum.chat/unified/syntax-tree
 
 [npm]: https://docs.npmjs.com/cli/install
 
@@ -95,12 +109,14 @@ repository, organisation, or community you agree to abide by its terms.
 
 [author]: https://wooorm.com
 
-[hast]: https://github.com/syntax-tree/hast
+[contributing]: https://github.com/syntax-tree/.github/blob/master/contributing.md
+
+[support]: https://github.com/syntax-tree/.github/blob/master/support.md
+
+[coc]: https://github.com/syntax-tree/.github/blob/master/code-of-conduct.md
 
 [ast]: https://github.com/inikulin/parse5/wiki/Documentation
 
-[node]: https://github.com/syntax-tree/hast#ast
+[tree]: https://github.com/syntax-tree/unist#tree
 
-[contributing]: https://github.com/syntax-tree/hast/blob/master/contributing.md
-
-[coc]: https://github.com/syntax-tree/hast/blob/master/code-of-conduct.md
+[hast]: https://github.com/syntax-tree/hast
