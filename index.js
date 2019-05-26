@@ -20,7 +20,7 @@ one.handlers.text = text
 one.handlers.comment = comment
 one.handlers.doctype = doctype
 
-// Transform a tree from HAST to Parse5’s AST.
+// Transform a tree from hast to Parse5’s AST.
 function transform(tree, space) {
   return one(tree, space === 'svg' ? svg : html)
 }
