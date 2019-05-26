@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-- lts/boron
-- node
+  - lts/dubnium
+  - node
 after_script: bash <(curl -s https://codecov.io/bash)
 deploy:
   provider: releases
@@ -9,7 +9,7 @@ deploy:
   api_key:
     secure: RfhcnHJZF3uQZaupONL33W3tOiffPYYtUmWor82QBBzc+vE8dUM1KpdmeQ1KXqaT/U2Qm6Z2UpLudj85fXrdv5h9YCbhZckmEPX371vrIyYHIqKcCKrO8jx5Q0QhQKuphkFLxF5g5gNX1zslcdCzbsvXYsAyCHvyAMB3e5mxadQsObNRmaoxy2fUP3FiXgHbD5AJuK4Tkj26/PWEahQgiCeRERcJzImvnDy0uvnjWPyAItLr5F6wdesQr/TiRu+lDYHmo2bvx0smkOD7dG+ebkgPlIXsglReouKCGrHmtNuk/JCt8m7RC71HdG2ZLtAKfiUB3pUSKwxmeCGeLSiiRNz7RTwlMTyiGVDRsayGoicQOLkZD6Exxcx9fTo65CdnOQKjcbKADCkTli9fO+m5Cr1hwLDERDVn5N0SK+OJ8gxRtiq6p+qKUQGTDBUPF86kalRms93B6AHJD8XJejTM8r8J+zHz+OU9T1CkIkhMYUnomPr+281uLG0XFPUpGUhO7KOx/ngfRJeK3bDL/nLoWDRt4pU1xjfdrpEgzfTpcJsy5PIGEtdeb1EJzOh11I6LnNzvvkerPeR7G2mGk9KWDb8rSea0iUlW1HgZp+S4CDYKGYlVxWmW2oysO17i04ViqJ4d2hmLvulhTILFELucz/jA0vg7pdZrgIpflnpNCeg=
   file:
-    - "hast-util-to-parse5.js"
-    - "hast-util-to-parse5.min.js"
+    - 'hast-util-to-parse5.js'
+    - 'hast-util-to-parse5.min.js'
   on:
     tags: true
