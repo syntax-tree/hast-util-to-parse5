@@ -31,7 +31,7 @@ test('position', function(t) {
 
   delete expected.parentNode
 
-  /* Not possible yet to map this one. */
+  // Not possible yet to map this one.
   delete expected.sourceCodeLocation.startTag
 
   t.deepEqual(json(actual), json(expected), 'should transform positions')
