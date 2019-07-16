@@ -61,6 +61,11 @@ If an `svg` element is found in the HTML space, `toParse5` automatically
 switches to the SVG space when entering the element, and switches back when
 exiting.
 
+## Security
+
+Use of `hast-util-to-parse5` can open you up to a
+[cross-site scripting (XSS)][xss] attack if the hast tree is unsafe.
+
 ## Contribute
 
 See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
@@ -120,3 +125,5 @@ abide by its terms.
 [tree]: https://github.com/syntax-tree/unist#tree
 
 [hast]: https://github.com/syntax-tree/hast
+
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
