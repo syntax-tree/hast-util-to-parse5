@@ -68,6 +68,8 @@ Use of `hast-util-to-parse5` can open you up to a
 
 ## Related
 
+*   [`hast-util-from-parse5`](https://github.com/syntax-tree/hast-util-from-parse5)
+    — transform from Parse5’s AST to hast
 *   [`hast-util-to-nlcst`](https://github.com/syntax-tree/hast-util-to-nlcst)
     — transform hast to nlcst
 *   [`hast-util-to-mdast`](https://github.com/syntax-tree/hast-util-to-mdast)
