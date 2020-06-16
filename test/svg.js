@@ -5,8 +5,8 @@ var parse5 = require('parse5')
 var json = require('./json')
 var toParse5 = require('..')
 
-test('svg', function(t) {
-  t.test('should transform SVG in HTML', function(st) {
+test('svg', function (t) {
+  t.test('should transform SVG in HTML', function (st) {
     var actual = toParse5({
       type: 'element',
       tagName: 'svg',
@@ -45,7 +45,7 @@ test('svg', function(t) {
 
     st.end()
   })
-  t.test('should transform SVG', function(st) {
+  t.test('should transform SVG', function (st) {
     var actual = toParse5(
       {
         type: 'element',

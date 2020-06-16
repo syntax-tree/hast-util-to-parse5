@@ -5,8 +5,8 @@ var parse5 = require('parse5')
 var json = require('./json')
 var toParse5 = require('..')
 
-test('root', function(t) {
-  t.test('should transform a root (quirks)', function(st) {
+test('root', function (t) {
+  t.test('should transform a root (quirks)', function (st) {
     var expected = parse5.parse('')
 
     st.deepEqual(
@@ -32,7 +32,7 @@ test('root', function(t) {
     st.end()
   })
 
-  t.test('should transform a root (no-quirks)', function(st) {
+  t.test('should transform a root (no-quirks)', function (st) {
     var expected = parse5.parse('<!doctypehtml>')
 
     st.deepEqual(

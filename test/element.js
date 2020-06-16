@@ -5,8 +5,8 @@ var parse5 = require('parse5')
 var json = require('./json')
 var toParse5 = require('..')
 
-test('element', function(t) {
-  t.test('should transform elements', function(st) {
+test('element', function (t) {
+  t.test('should transform elements', function (st) {
     var actual = toParse5({
       type: 'element',
       tagName: 'h1',
@@ -21,7 +21,7 @@ test('element', function(t) {
     st.end()
   })
 
-  t.test('should transform attributes', function(st) {
+  t.test('should transform attributes', function (st) {
     var actual = toParse5({
       type: 'element',
       tagName: 'div',
@@ -96,7 +96,7 @@ test('element', function(t) {
     st.end()
   })
 
-  t.test('should transform void elements', function(st) {
+  t.test('should transform void elements', function (st) {
     var actual = toParse5({
       type: 'element',
       tagName: 'img',
@@ -111,7 +111,7 @@ test('element', function(t) {
     st.end()
   })
 
-  t.test('should transform templates with elements', function(st) {
+  t.test('should transform templates with elements', function (st) {
     var actual = toParse5({
       type: 'element',
       tagName: 'template',
@@ -131,7 +131,7 @@ test('element', function(t) {
     st.end()
   })
 
-  t.test('should transform templates with text', function(st) {
+  t.test('should transform templates with text', function (st) {
     var actual = toParse5({
       type: 'element',
       tagName: 'template',

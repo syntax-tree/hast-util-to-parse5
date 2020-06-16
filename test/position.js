@@ -5,7 +5,7 @@ var parse5 = require('parse5')
 var json = require('./json')
 var toParse5 = require('..')
 
-test('position', function(t) {
+test('position', function (t) {
   var actual = toParse5({
     type: 'element',
     tagName: 'h1',

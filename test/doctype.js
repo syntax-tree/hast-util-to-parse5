@@ -4,8 +4,8 @@ var test = require('tape')
 var parse5 = require('parse5')
 var toParse5 = require('..')
 
-test('doctype', function(t) {
-  t.test('should transform a doctype (legacy)', function(st) {
+test('doctype', function (t) {
+  t.test('should transform a doctype (legacy)', function (st) {
     var actual = toParse5({
       type: 'doctype',
       name: 'html',
@@ -22,7 +22,7 @@ test('doctype', function(t) {
     st.end()
   })
 
-  t.test('should transform a doctype (modern)', function(st) {
+  t.test('should transform a doctype (modern)', function (st) {
     var actual = toParse5({type: 'doctype', name: 'html'})
     var expected = parse5.parse('<!doctypehtml>').childNodes[0]
 
