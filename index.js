@@ -8,28 +8,32 @@ var toH = require('hast-to-hyperscript')
 var ns = require('web-namespaces')
 var zwitch = require('zwitch')
 
-module.exports = transform
+module.exports = toParse5
 
-var ignoredSpaces = ['svg', 'html']
-
-var one = zwitch('type')
-
-one.handlers.root = root
-one.handlers.element = element
-one.handlers.text = text
-one.handlers.comment = comment
-one.handlers.doctype = doctype
+var one = zwitch('type', {
+  handlers: {
+    root: root,
+    element: element,
+    text: text,
+    comment: comment,
+    doctype: doctype
+  }
+})
 
 // Transform a tree from hast to Parse5’s AST.
-function transform(tree, space) {
+function toParse5(tree, space) {
   return one(tree, space === 'svg' ? svg : html)
 }
 
 function root(node, schema) {
-  var data = node.data || {}
-  var mode = data.quirksMode ? 'quirks' : 'no-quirks'
-
-  return patch(node, {nodeName: '#document', mode: mode}, schema)
+  return patch(
+    node,
+    {
+      nodeName: '#document',
+      mode: (node.data || {}).quirksMode ? 'quirks' : 'no-quirks'
+    },
+    schema
+  )
 }
 
 function fragment(node, schema) {
@@ -58,38 +62,33 @@ function comment(node, schema) {
 }
 
 function element(node, schema) {
-  var space = schema.space
-  var shallow = xtend(node, {children: []})
-
-  return toH(h, shallow, {space: space})
+  return toH(h, xtend(node, {children: []}), {space: schema.space})
 
   function h(name, attrs) {
     var values = []
-    var p5
-    var attr
+    var info
     var value
     var key
-    var info
-    var pos
+    var index
+    var p5
 
     for (key in attrs) {
       info = find(schema, key)
-      attr = attrs[key]
 
-      if (attr === false || (info.boolean && !attr)) {
+      if (attrs[key] === false || (info.boolean && !attrs[key])) {
         continue
       }
 
-      value = {name: key, value: attr === true ? '' : String(attr)}
+      value = {name: key, value: attrs[key] === true ? '' : String(attrs[key])}
 
-      if (info.space && ignoredSpaces.indexOf(info.space) === -1) {
-        pos = key.indexOf(':')
+      if (info.space && info.space !== 'html' && info.space !== 'svg') {
+        index = key.indexOf(':')
 
-        if (pos === -1) {
+        if (index < 0) {
           value.prefix = ''
         } else {
-          value.name = key.slice(pos + 1)
-          value.prefix = key.slice(0, pos)
+          value.name = key.slice(index + 1)
+          value.prefix = key.slice(0, index)
         }
 
         value.namespace = ns[info.space]
@@ -100,9 +99,7 @@ function element(node, schema) {
 
     p5 = patch(node, {nodeName: name, tagName: name, attrs: values}, schema)
 
-    if (name === 'template') {
-      p5.content = fragment(shallow.content, schema)
-    }
+    if (name === 'template') p5.content = fragment(node.content, schema)
 
     return p5
   }
@@ -112,28 +109,25 @@ function element(node, schema) {
 function patch(node, p5, parentSchema) {
   var schema = parentSchema
   var position = node.position
-  var children = node.children
   var childNodes = []
-  var length = children ? children.length : 0
   var index = -1
   var child
 
   if (node.type === 'element') {
-    if (schema.space === 'html' && node.tagName === 'svg') {
-      schema = svg
-    }
-
+    if (schema.space === 'html' && node.tagName === 'svg') schema = svg
     p5.namespaceURI = ns[schema.space]
-  }
-
-  while (++index < length) {
-    child = one(children[index], schema)
-    child.parentNode = p5
-    childNodes[index] = child
   }
 
   if (node.type === 'element' || node.type === 'root') {
     p5.childNodes = childNodes
+
+    if (node.children) {
+      while (++index < node.children.length) {
+        child = one(node.children[index], schema)
+        child.parentNode = p5
+        childNodes[index] = child
+      }
+    }
   }
 
   if (position && position.start && position.end) {
