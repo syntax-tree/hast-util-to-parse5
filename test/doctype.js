@@ -9,9 +9,7 @@ test('doctype', function (t) {
       name: 'html',
       system: 'http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd'
     })
-    var expected = parse5.parse(
-      '<!DOCTYPE html SYSTEM "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd">'
-    ).childNodes[0]
+    var expected = parse5.parse('<!DOCTYPE html>').childNodes[0]
 
     expected.parentNode = undefined
 
