@@ -2,12 +2,12 @@
 
 /* eslint-disable import/no-unassigned-import */
 
-require('./root')
-require('./doctype')
-require('./text')
-require('./comment')
-require('./element')
-require('./position')
-require('./svg')
+import './root.js'
+import './doctype.js'
+import './text.js'
+import './comment.js'
+import './element.js'
+import './position.js'
+import './svg.js'
 
 /* eslint-enable import/no-unassigned-import */

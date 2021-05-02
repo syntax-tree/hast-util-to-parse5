@@ -1,5 +1,2 @@
 coverage/
-hast-util-to-parse5.js
-hast-util-to-parse5.min.js
-*.json
 *.md

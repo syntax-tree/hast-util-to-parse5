@@ -1,27 +1,14 @@
-'use strict'
+import {html, svg, find} from 'property-information'
+import {toH} from 'hast-to-hyperscript'
+import {webNamespaces} from 'web-namespaces'
+import {zwitch} from 'zwitch'
 
-var xtend = require('xtend')
-var html = require('property-information/html')
-var svg = require('property-information/svg')
-var find = require('property-information/find')
-var toH = require('hast-to-hyperscript')
-var ns = require('web-namespaces')
-var zwitch = require('zwitch')
+var own = {}.hasOwnProperty
 
-module.exports = toParse5
-
-var one = zwitch('type', {
-  handlers: {
-    root: root,
-    element: element,
-    text: text,
-    comment: comment,
-    doctype: doctype
-  }
-})
+var one = zwitch('type', {handlers: {root, element, text, comment, doctype}})
 
 // Transform a tree from hast to Parse5’s AST.
-function toParse5(tree, space) {
+export function toParse5(tree, space) {
   return one(tree, space === 'svg' ? svg : html)
 }
 
@@ -62,7 +49,7 @@ function comment(node, schema) {
 }
 
 function element(node, schema) {
-  return toH(h, xtend(node, {children: []}), {space: schema.space})
+  return toH(h, Object.assign({}, node, {children: []}), {space: schema.space})
 
   function h(name, attrs) {
     var values = []
@@ -73,9 +60,13 @@ function element(node, schema) {
     var p5
 
     for (key in attrs) {
+      if (!own.call(attrs, key) || attrs[key] === false) {
+        continue
+      }
+
       info = find(schema, key)
 
-      if (attrs[key] === false || (info.boolean && !attrs[key])) {
+      if (info.boolean && !attrs[key]) {
         continue
       }
 
@@ -91,7 +82,7 @@ function element(node, schema) {
           value.prefix = key.slice(0, index)
         }
 
-        value.namespace = ns[info.space]
+        value.namespace = webNamespaces[info.space]
       }
 
       values.push(value)
@@ -115,7 +106,7 @@ function patch(node, p5, parentSchema) {
 
   if (node.type === 'element') {
     if (schema.space === 'html' && node.tagName === 'svg') schema = svg
-    p5.namespaceURI = ns[schema.space]
+    p5.namespaceURI = webNamespaces[schema.space]
   }
 
   if (node.type === 'element' || node.type === 'root') {

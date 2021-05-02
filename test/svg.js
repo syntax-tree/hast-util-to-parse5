@@ -1,9 +1,7 @@
-'use strict'
-
-var test = require('tape')
-var parse5 = require('parse5')
-var json = require('./json')
-var toParse5 = require('..')
+import test from 'tape'
+import parse5 from 'parse5'
+import {json} from './json.js'
+import {toParse5} from '../index.js'
 
 test('svg', function (t) {
   t.test('should transform SVG in HTML', function (st) {

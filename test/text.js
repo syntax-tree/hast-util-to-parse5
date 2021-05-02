@@ -1,8 +1,6 @@
-'use strict'
-
-var test = require('tape')
-var parse5 = require('parse5')
-var toParse5 = require('..')
+import test from 'tape'
+import parse5 from 'parse5'
+import {toParse5} from '../index.js'
 
 test('text', function (t) {
   var expected = parse5.parseFragment('Alpha').childNodes[0]

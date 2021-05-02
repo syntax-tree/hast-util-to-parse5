@@ -15,6 +15,9 @@
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -24,7 +27,7 @@ npm install hast-util-to-parse5
 ## Use
 
 ```js
-var toParse5 = require('hast-util-to-parse5')
+import {toParse5} from 'hast-util-to-parse5'
 
 var ast = toParse5({
   type: 'element',
@@ -47,6 +50,9 @@ Yields:
 ```
 
 ## API
+
+This package exports the following identifiers: `toParse5`.
+There is no default export.
 
 ### `toParse5(tree[, space])`
 

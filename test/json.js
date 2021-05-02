@@ -1,9 +1,5 @@
-'use strict'
+import stringify from 'json-stringify-safe'
 
-var stringify = require('json-stringify-safe')
-
-module.exports = json
-
-function json(value) {
+export function json(value) {
   return JSON.parse(stringify(value))
 }

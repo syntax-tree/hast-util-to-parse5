@@ -1,8 +1,5 @@
 .DS_Store
 *.log
-.nyc_output/
 coverage/
 node_modules/
-hast-util-to-parse5.js
-hast-util-to-parse5.min.js
 yarn.lock
