@@ -13,7 +13,7 @@ test('doctype', function (t) {
       '<!DOCTYPE html SYSTEM "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd">'
     ).childNodes[0]
 
-    delete expected.parentNode
+    expected.parentNode = undefined
 
     st.deepEqual(actual, expected)
 
@@ -24,7 +24,7 @@ test('doctype', function (t) {
     var actual = toParse5({type: 'doctype', name: 'html'})
     var expected = parse5.parse('<!doctypehtml>').childNodes[0]
 
-    delete expected.parentNode
+    expected.parentNode = undefined
 
     st.deepEqual(actual, expected)
 

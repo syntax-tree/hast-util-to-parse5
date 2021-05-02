@@ -95,6 +95,7 @@ test('element', function (t) {
   })
 
   t.test('should transform void elements', function (st) {
+    // @ts-ignore runtime.
     var actual = toParse5({
       type: 'element',
       tagName: 'img',
@@ -110,6 +111,7 @@ test('element', function (t) {
   })
 
   t.test('should transform templates with elements', function (st) {
+    // @ts-ignore runtime.
     var actual = toParse5({
       type: 'element',
       tagName: 'template',
@@ -130,6 +132,7 @@ test('element', function (t) {
   })
 
   t.test('should transform templates with text', function (st) {
+    // @ts-ignore runtime.
     var actual = toParse5({
       type: 'element',
       tagName: 'template',

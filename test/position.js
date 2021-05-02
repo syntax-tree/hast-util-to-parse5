@@ -29,6 +29,7 @@ test('position', function (t) {
 
   delete expected.parentNode
 
+  // @ts-ignore Types are wrong.
   // Not possible yet to map this one.
   delete expected.sourceCodeLocation.startTag
 

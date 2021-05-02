@@ -18,12 +18,14 @@ test('svg', function (t) {
         {
           type: 'element',
           tagName: 'circle',
-          properties: {cx: '60', cy: '60', r: '50', fill: 'red'}
+          properties: {cx: '60', cy: '60', r: '50', fill: 'red'},
+          children: []
         },
         {
           type: 'element',
           tagName: 'circle',
-          properties: {cx: '170', cy: '60', r: '50', fill: 'green'}
+          properties: {cx: '170', cy: '60', r: '50', fill: 'green'},
+          children: []
         }
       ]
     })
@@ -48,13 +50,15 @@ test('svg', function (t) {
       {
         type: 'element',
         tagName: 'circle',
-        properties: {cx: '60', cy: '60', r: '50', fill: 'red'}
+        properties: {cx: '60', cy: '60', r: '50', fill: 'red'},
+        children: []
       },
       'svg'
     )
 
     var expected = parse5.parseFragment(
       '<svg><circle cx="60"  cy="60" r="50" fill="red"/></svg>'
+      // @ts-ignore runtime.
     ).childNodes[0].childNodes[0]
 
     delete expected.parentNode

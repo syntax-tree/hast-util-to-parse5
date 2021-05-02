@@ -6,7 +6,7 @@ test('comment', function (t) {
   var actual = toParse5({type: 'comment', value: 'Alpha'})
   var expected = parse5.parseFragment('<!--Alpha-->').childNodes[0]
 
-  delete expected.parentNode
+  expected.parentNode = undefined
 
   t.deepEqual(actual, expected, 'should transform comments')
 
