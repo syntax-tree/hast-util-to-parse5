@@ -1,7 +1,7 @@
 import test from 'tape'
 import parse5 from 'parse5'
-import {json} from './json.js'
 import {toParse5} from '../index.js'
+import {json} from './json.js'
 
 test('element', (t) => {
   t.test('should transform elements', (st) => {
