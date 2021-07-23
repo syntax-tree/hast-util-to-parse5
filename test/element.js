@@ -3,14 +3,14 @@ import parse5 from 'parse5'
 import {json} from './json.js'
 import {toParse5} from '../index.js'
 
-test('element', function (t) {
-  t.test('should transform elements', function (st) {
-    var actual = toParse5({
+test('element', (t) => {
+  t.test('should transform elements', (st) => {
+    const actual = toParse5({
       type: 'element',
       tagName: 'h1',
       children: [{type: 'text', value: 'Alpha'}]
     })
-    var expected = parse5.parseFragment('<h1>Alpha').childNodes[0]
+    const expected = parse5.parseFragment('<h1>Alpha').childNodes[0]
 
     delete expected.parentNode
 
@@ -19,8 +19,8 @@ test('element', function (t) {
     st.end()
   })
 
-  t.test('should transform attributes', function (st) {
-    var actual = toParse5({
+  t.test('should transform attributes', (st) => {
+    const actual = toParse5({
       type: 'element',
       tagName: 'div',
       properties: {},
@@ -72,7 +72,7 @@ test('element', function (t) {
       ]
     })
 
-    var expected = parse5.parseFragment(
+    const expected = parse5.parseFragment(
       [
         '<div>',
         '<h1 id="a" class="b c" hidden height="2">',
@@ -94,14 +94,14 @@ test('element', function (t) {
     st.end()
   })
 
-  t.test('should transform void elements', function (st) {
+  t.test('should transform void elements', (st) => {
     // @ts-ignore runtime.
-    var actual = toParse5({
+    const actual = toParse5({
       type: 'element',
       tagName: 'img',
       properties: {src: '#', alt: ''}
     })
-    var expected = parse5.parseFragment('<img src=# alt="">').childNodes[0]
+    const expected = parse5.parseFragment('<img src=# alt="">').childNodes[0]
 
     delete expected.parentNode
 
@@ -110,9 +110,9 @@ test('element', function (t) {
     st.end()
   })
 
-  t.test('should transform templates with elements', function (st) {
+  t.test('should transform templates with elements', (st) => {
     // @ts-ignore runtime.
-    var actual = toParse5({
+    const actual = toParse5({
       type: 'element',
       tagName: 'template',
       properties: {id: 'a'},
@@ -121,7 +121,7 @@ test('element', function (t) {
         children: [{type: 'text', value: 'Alpha'}]
       }
     })
-    var expected = parse5.parseFragment('<template id="a">Alpha</template>')
+    const expected = parse5.parseFragment('<template id="a">Alpha</template>')
       .childNodes[0]
 
     delete expected.parentNode
@@ -131,9 +131,9 @@ test('element', function (t) {
     st.end()
   })
 
-  t.test('should transform templates with text', function (st) {
+  t.test('should transform templates with text', (st) => {
     // @ts-ignore runtime.
-    var actual = toParse5({
+    const actual = toParse5({
       type: 'element',
       tagName: 'template',
       properties: {id: 'b'},
@@ -155,7 +155,7 @@ test('element', function (t) {
       }
     })
 
-    var expected = parse5.parseFragment(
+    const expected = parse5.parseFragment(
       '<template id="b"><b>bold</b> and <i>italic</i></template>'
     ).childNodes[0]
 

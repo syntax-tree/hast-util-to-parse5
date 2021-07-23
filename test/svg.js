@@ -3,9 +3,9 @@ import parse5 from 'parse5'
 import {json} from './json.js'
 import {toParse5} from '../index.js'
 
-test('svg', function (t) {
-  t.test('should transform SVG in HTML', function (st) {
-    var actual = toParse5({
+test('svg', (t) => {
+  t.test('should transform SVG in HTML', (st) => {
+    const actual = toParse5({
       type: 'element',
       tagName: 'svg',
       properties: {
@@ -30,7 +30,7 @@ test('svg', function (t) {
       ]
     })
 
-    var expected = parse5.parseFragment(
+    const expected = parse5.parseFragment(
       [
         '<svg width="230" height="120" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">',
         '<circle cx="60"  cy="60" r="50" fill="red"/>',
@@ -45,8 +45,8 @@ test('svg', function (t) {
 
     st.end()
   })
-  t.test('should transform SVG', function (st) {
-    var actual = toParse5(
+  t.test('should transform SVG', (st) => {
+    const actual = toParse5(
       {
         type: 'element',
         tagName: 'circle',
@@ -56,7 +56,7 @@ test('svg', function (t) {
       'svg'
     )
 
-    var expected = parse5.parseFragment(
+    const expected = parse5.parseFragment(
       '<svg><circle cx="60"  cy="60" r="50" fill="red"/></svg>'
       // @ts-ignore runtime.
     ).childNodes[0].childNodes[0]

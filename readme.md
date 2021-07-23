@@ -29,14 +29,14 @@ npm install hast-util-to-parse5
 ```js
 import {toParse5} from 'hast-util-to-parse5'
 
-var ast = toParse5({
+const tree = toParse5({
   type: 'element',
   tagName: 'h1',
   properties: {},
   children: [{type: 'text', value: 'World!'}]
 })
 
-console.log(ast)
+console.log(tree)
 ```
 
 Yields:

@@ -3,9 +3,9 @@ import parse5 from 'parse5'
 import {json} from './json.js'
 import {toParse5} from '../index.js'
 
-test('root', function (t) {
-  t.test('should transform a root (quirks)', function (st) {
-    var expected = parse5.parse('')
+test('root', (t) => {
+  t.test('should transform a root (quirks)', (st) => {
+    const expected = parse5.parse('')
 
     st.deepEqual(
       json(
@@ -30,8 +30,8 @@ test('root', function (t) {
     st.end()
   })
 
-  t.test('should transform a root (no-quirks)', function (st) {
-    var expected = parse5.parse('<!doctypehtml>')
+  t.test('should transform a root (no-quirks)', (st) => {
+    const expected = parse5.parse('<!doctypehtml>')
 
     st.deepEqual(
       json(

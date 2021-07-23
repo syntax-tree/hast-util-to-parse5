@@ -3,8 +3,8 @@ import parse5 from 'parse5'
 import {json} from './json.js'
 import {toParse5} from '../index.js'
 
-test('position', function (t) {
-  var actual = toParse5({
+test('position', (t) => {
+  const actual = toParse5({
     type: 'element',
     tagName: 'h1',
     children: [
@@ -23,7 +23,7 @@ test('position', function (t) {
     }
   })
 
-  var expected = parse5.parseFragment('<h1>Alpha', {
+  const expected = parse5.parseFragment('<h1>Alpha', {
     sourceCodeLocationInfo: true
   }).childNodes[0]
 
