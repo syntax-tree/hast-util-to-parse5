@@ -39,7 +39,7 @@ test('svg', (t) => {
       ].join('')
     ).childNodes[0]
 
-    delete expected.parentNode
+    Object.assign(expected, {parentNode: undefined})
 
     st.deepEqual(json(actual), json(expected))
 
@@ -58,7 +58,7 @@ test('svg', (t) => {
 
     const expected = parse5.parseFragment(
       '<svg><circle cx="60"  cy="60" r="50" fill="red"/></svg>'
-      // @ts-ignore runtime.
+      // @ts-expect-error runtime.
     ).childNodes[0].childNodes[0]
 
     delete expected.parentNode

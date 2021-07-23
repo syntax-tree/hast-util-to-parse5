@@ -11,7 +11,7 @@ test('doctype', (t) => {
     })
     const expected = parse5.parse('<!DOCTYPE html>').childNodes[0]
 
-    expected.parentNode = undefined
+    Object.assign(expected, {parentNode: undefined})
 
     st.deepEqual(actual, expected)
 
@@ -22,7 +22,7 @@ test('doctype', (t) => {
     const actual = toParse5({type: 'doctype', name: 'html'})
     const expected = parse5.parse('<!doctypehtml>').childNodes[0]
 
-    expected.parentNode = undefined
+    Object.assign(expected, {parentNode: undefined})
 
     st.deepEqual(actual, expected)
 

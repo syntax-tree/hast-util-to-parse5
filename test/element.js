@@ -12,7 +12,7 @@ test('element', (t) => {
     })
     const expected = parse5.parseFragment('<h1>Alpha').childNodes[0]
 
-    delete expected.parentNode
+    Object.assign(expected, {parentNode: undefined})
 
     st.deepEqual(json(actual), json(expected))
 
@@ -87,7 +87,7 @@ test('element', (t) => {
       ].join('')
     ).childNodes[0]
 
-    delete expected.parentNode
+    Object.assign(expected, {parentNode: undefined})
 
     st.deepEqual(json(actual), json(expected))
 
@@ -95,7 +95,7 @@ test('element', (t) => {
   })
 
   t.test('should transform void elements', (st) => {
-    // @ts-ignore runtime.
+    // @ts-expect-error runtime.
     const actual = toParse5({
       type: 'element',
       tagName: 'img',
@@ -103,7 +103,7 @@ test('element', (t) => {
     })
     const expected = parse5.parseFragment('<img src=# alt="">').childNodes[0]
 
-    delete expected.parentNode
+    Object.assign(expected, {parentNode: undefined})
 
     st.deepEqual(json(actual), json(expected))
 
@@ -111,7 +111,7 @@ test('element', (t) => {
   })
 
   t.test('should transform templates with elements', (st) => {
-    // @ts-ignore runtime.
+    // @ts-expect-error runtime.
     const actual = toParse5({
       type: 'element',
       tagName: 'template',
@@ -124,7 +124,7 @@ test('element', (t) => {
     const expected = parse5.parseFragment('<template id="a">Alpha</template>')
       .childNodes[0]
 
-    delete expected.parentNode
+    Object.assign(expected, {parentNode: undefined})
 
     st.deepEqual(json(actual), json(expected))
 
@@ -132,7 +132,7 @@ test('element', (t) => {
   })
 
   t.test('should transform templates with text', (st) => {
-    // @ts-ignore runtime.
+    // @ts-expect-error runtime.
     const actual = toParse5({
       type: 'element',
       tagName: 'template',
@@ -159,7 +159,7 @@ test('element', (t) => {
       '<template id="b"><b>bold</b> and <i>italic</i></template>'
     ).childNodes[0]
 
-    delete expected.parentNode
+    Object.assign(expected, {parentNode: undefined})
 
     st.deepEqual(json(actual), json(expected))
 

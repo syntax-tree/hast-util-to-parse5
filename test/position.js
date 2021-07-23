@@ -27,9 +27,9 @@ test('position', (t) => {
     sourceCodeLocationInfo: true
   }).childNodes[0]
 
-  delete expected.parentNode
+  Object.assign(expected, {parentNode: undefined})
 
-  // @ts-ignore Types are wrong.
+  // @ts-expect-error Types are wrong.
   // Not possible yet to map this one.
   delete expected.sourceCodeLocation.startTag
 
