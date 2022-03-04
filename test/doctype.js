@@ -7,6 +7,7 @@ test('doctype', (t) => {
     const actual = toParse5({
       type: 'doctype',
       name: 'html',
+      // @ts-expect-error legacy property is not recognized by @types/hast
       system: 'http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd'
     })
     const expected = parse5.parse('<!DOCTYPE html>').childNodes[0]
