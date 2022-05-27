@@ -1,5 +1,5 @@
 import test from 'tape'
-import parse5 from 'parse5'
+import {parseFragment} from 'parse5'
 import {toParse5} from '../index.js'
 import {json} from './json.js'
 
@@ -30,7 +30,7 @@ test('svg', (t) => {
       ]
     })
 
-    const expected = parse5.parseFragment(
+    const expected = parseFragment(
       [
         '<svg width="230" height="120" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">',
         '<circle cx="60"  cy="60" r="50" fill="red"/>',
@@ -56,7 +56,7 @@ test('svg', (t) => {
       'svg'
     )
 
-    const expected = parse5.parseFragment(
+    const expected = parseFragment(
       '<svg><circle cx="60"  cy="60" r="50" fill="red"/></svg>'
       // @ts-expect-error runtime.
     ).childNodes[0].childNodes[0]

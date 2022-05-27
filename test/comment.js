@@ -1,10 +1,10 @@
 import test from 'tape'
-import parse5 from 'parse5'
+import {parseFragment} from 'parse5'
 import {toParse5} from '../index.js'
 
 test('comment', (t) => {
   const actual = toParse5({type: 'comment', value: 'Alpha'})
-  const expected = parse5.parseFragment('<!--Alpha-->').childNodes[0]
+  const expected = parseFragment('<!--Alpha-->').childNodes[0]
 
   Object.assign(expected, {parentNode: undefined})
 

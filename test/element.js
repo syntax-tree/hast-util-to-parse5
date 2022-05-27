@@ -1,5 +1,5 @@
 import test from 'tape'
-import parse5 from 'parse5'
+import {parseFragment} from 'parse5'
 import {toParse5} from '../index.js'
 import {json} from './json.js'
 
@@ -10,7 +10,7 @@ test('element', (t) => {
       tagName: 'h1',
       children: [{type: 'text', value: 'Alpha'}]
     })
-    const expected = parse5.parseFragment('<h1>Alpha').childNodes[0]
+    const expected = parseFragment('<h1>Alpha').childNodes[0]
 
     Object.assign(expected, {parentNode: undefined})
 
@@ -72,7 +72,7 @@ test('element', (t) => {
       ]
     })
 
-    const expected = parse5.parseFragment(
+    const expected = parseFragment(
       [
         '<div>',
         '<h1 id="a" class="b c" hidden height="2">',
@@ -101,7 +101,7 @@ test('element', (t) => {
       tagName: 'img',
       properties: {src: '#', alt: ''}
     })
-    const expected = parse5.parseFragment('<img src=# alt="">').childNodes[0]
+    const expected = parseFragment('<img src=# alt="">').childNodes[0]
 
     Object.assign(expected, {parentNode: undefined})
 
@@ -121,7 +121,7 @@ test('element', (t) => {
         children: [{type: 'text', value: 'Alpha'}]
       }
     })
-    const expected = parse5.parseFragment('<template id="a">Alpha</template>')
+    const expected = parseFragment('<template id="a">Alpha</template>')
       .childNodes[0]
 
     Object.assign(expected, {parentNode: undefined})
@@ -155,7 +155,7 @@ test('element', (t) => {
       }
     })
 
-    const expected = parse5.parseFragment(
+    const expected = parseFragment(
       '<template id="b"><b>bold</b> and <i>italic</i></template>'
     ).childNodes[0]
 

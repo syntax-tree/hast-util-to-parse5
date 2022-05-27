@@ -1,5 +1,5 @@
 import test from 'tape'
-import parse5 from 'parse5'
+import {parseFragment} from 'parse5'
 import {toParse5} from '../index.js'
 import {json} from './json.js'
 
@@ -23,7 +23,7 @@ test('position', (t) => {
     }
   })
 
-  const expected = parse5.parseFragment('<h1>Alpha', {
+  const expected = parseFragment('<h1>Alpha', {
     sourceCodeLocationInfo: true
   }).childNodes[0]
 

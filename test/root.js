@@ -1,11 +1,11 @@
 import test from 'tape'
-import parse5 from 'parse5'
+import {parse} from 'parse5'
 import {toParse5} from '../index.js'
 import {json} from './json.js'
 
 test('root', (t) => {
   t.test('should transform a root (quirks)', (st) => {
-    const expected = parse5.parse('')
+    const expected = parse('')
 
     st.deepEqual(
       json(
@@ -31,7 +31,7 @@ test('root', (t) => {
   })
 
   t.test('should transform a root (no-quirks)', (st) => {
-    const expected = parse5.parse('<!doctypehtml>')
+    const expected = parse('<!doctypehtml>')
 
     st.deepEqual(
       json(
