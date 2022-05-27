@@ -8,20 +8,57 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**hast**][hast] utility to transform to [Parse5’s AST][ast].
+[hast][] utility to generate [`parse5`][parse5]s [AST][].
 
-> **Q**: Why not use a Parse5 adapter?
-> **A**: Because it’s more code weight to use adapters, and much more fragile.
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`toParse5(tree[, space])`](#toparse5tree-space)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Security](#security)
+*   [Related](#related)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a utility that can turn a hast syntax tree into `parse5`s AST.
+Why not use a Parse5 adapter, you might ask?
+Well, because it’s more code weight to use adapters, and more fragile.
+
+## When should I use this?
+
+This package is useful when working with `parse5`, and for some reason want to
+generate its AST again.
+The inverse utility, [`hast-util-from-parse5`][hast-util-from-parse5], is more
+likely what you want.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
 
 ```sh
 npm install hast-util-to-parse5
+```
+
+In Deno with [`esm.sh`][esmsh]:
+
+```js
+import {toParse5} from 'https://esm.sh/hast-util-to-parse5@7'
+```
+
+In browsers with [`esm.sh`][esmsh]:
+
+```html
+<script type="module">
+  import {toParse5} from 'https://esm.sh/hast-util-to-parse5@7?bundle'
+</script>
 ```
 
 ## Use
@@ -51,21 +88,33 @@ Yields:
 
 ## API
 
-This package exports the following identifiers: `toParse5`.
+This package exports the identifier `toParse5`.
 There is no default export.
 
 ### `toParse5(tree[, space])`
 
-Transform a [**hast**][hast] [*tree*][tree] to [Parse5’s AST][ast].
+[hast][] utility to transform to [`parse5`][parse5]s [ast][].
 
 ###### `space`
 
-Whether the root of the given [*tree*][tree] is in the `'html'` or `'svg'` space
-(enum, `'svg'` or `'html'`, default: `'html'`).
+Whether the root of the given tree is in the HTML or SVG space (enum, `'svg'` or
+`'html'`, default: `'html'`).
 
 If an `svg` element is found in the HTML space, `toParse5` automatically
 switches to the SVG space when entering the element, and switches back when
 exiting.
+
+## Types
+
+This package is fully typed with [TypeScript][].
+It exports the additional type `Space`.
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Security
 
@@ -89,8 +138,8 @@ Use of `hast-util-to-parse5` can open you up to a
 
 ## Contribute
 
-See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
-started.
+See [`contributing.md`][contributing] in [`syntax-tree/.github`][health] for
+ways to get started.
 See [`support.md`][support] for ways to get help.
 
 This project has a [code of conduct][coc].
@@ -131,20 +180,30 @@ abide by its terms.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[esmsh]: https://esm.sh
+
+[typescript]: https://www.typescriptlang.org
+
 [license]: license
 
 [author]: https://wooorm.com
 
-[contributing]: https://github.com/syntax-tree/.github/blob/HEAD/contributing.md
+[health]: https://github.com/syntax-tree/.github
 
-[support]: https://github.com/syntax-tree/.github/blob/HEAD/support.md
+[contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
 
-[coc]: https://github.com/syntax-tree/.github/blob/HEAD/code-of-conduct.md
+[support]: https://github.com/syntax-tree/.github/blob/main/support.md
 
-[ast]: https://github.com/inikulin/parse5/wiki/Documentation
-
-[tree]: https://github.com/syntax-tree/unist#tree
+[coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
 
 [hast]: https://github.com/syntax-tree/hast
 
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[parse5]: https://github.com/inikulin/parse5
+
+[ast]: https://github.com/inikulin/parse5/wiki/Documentation
+
+[hast-util-from-parse5]: https://github.com/syntax-tree/hast-util-from-parse5
