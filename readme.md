@@ -8,7 +8,7 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[hast][] utility to generate [`parse5`][parse5]s [AST][].
+[hast][] utility to generate [`parse5`][parse5]s [AST][parse5-node].
 
 ## Contents
 
@@ -17,7 +17,9 @@
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`toParse5(tree[, space])`](#toparse5tree-space)
+    *   [`toParse5(tree[, space|options])`](#toparse5tree-spaceoptions)
+    *   [`Options`](#options)
+    *   [`Space`](#space)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Security](#security)
@@ -41,7 +43,7 @@ likely what you want.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 14.14+ and 16.0+), install with [npm][]:
 
 ```sh
 npm install hast-util-to-parse5
@@ -88,32 +90,55 @@ Yields:
 
 ## API
 
-This package exports the identifier `toParse5`.
+This package exports the identifier [`toParse5`][toparse5].
 There is no default export.
 
-### `toParse5(tree[, space])`
+### `toParse5(tree[, space|options])`
 
-[hast][] utility to transform to [`parse5`][parse5]s [ast][].
+Transform a hast tree to Parse5’s AST.
 
-###### `space`
+###### Parameters
 
-Whether the root of the given tree is in the HTML or SVG space (enum, `'svg'` or
-`'html'`, default: `'html'`).
+*   `tree` ([`HastNode`][hast-node])
+    — tree to transform
+*   `space` ([`Space`][space], optional)
+    — same as `{space: space}`
+*   `options` ([`Options`][options], optional)
+    — configuration
 
-If an `svg` element is found in the HTML space, `toParse5` automatically
-switches to the SVG space when entering the element, and switches back when
-exiting.
+###### Returns
+
+`parse5` node ([`Parse5Node`][parse5-node]).
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+*   `space` ([`Space`][space], optional)
+    — which space the document is in
+
+### `Space`
+
+Namespace (TypeScript type).
+
+###### Type
+
+```ts
+type Space = 'html' | 'svg'
+```
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional type `Space`.
+It exports the additional types [`Options`][options] and [`Space`][space].
 
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+As of now, that is Node.js 14.14+ and 16.0+.
 Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Security
@@ -198,12 +223,20 @@ abide by its terms.
 
 [coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
 
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
 [hast]: https://github.com/syntax-tree/hast
 
-[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+[hast-node]: https://github.com/syntax-tree/hast#nodes
 
 [parse5]: https://github.com/inikulin/parse5
 
-[ast]: https://github.com/inikulin/parse5/wiki/Documentation
+[parse5-node]: https://github.com/inikulin/parse5/blob/master/packages/parse5/lib/tree-adapters/default.ts
 
 [hast-util-from-parse5]: https://github.com/syntax-tree/hast-util-from-parse5
+
+[toparse5]: #toparse5tree-spaceoptions
+
+[options]: #options
+
+[space]: #space
