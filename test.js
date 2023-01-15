@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import stringify from 'json-stringify-safe'
 import {parse, parseFragment} from 'parse5'
-import {toParse5} from '../index.js'
+import {toParse5} from './index.js'
 
 test('core', () => {
   assert.deepEqual(
