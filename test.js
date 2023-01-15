@@ -3,8 +3,15 @@ import test from 'node:test'
 import stringify from 'json-stringify-safe'
 import {parse, parseFragment} from 'parse5'
 import {toParse5} from './index.js'
+import * as mod from './index.js'
 
-test('core', () => {
+test('toParse5', () => {
+  assert.deepEqual(
+    Object.keys(mod).sort(),
+    ['toParse5'],
+    'should expose the public api'
+  )
+
   assert.deepEqual(
     json(
       toParse5({
