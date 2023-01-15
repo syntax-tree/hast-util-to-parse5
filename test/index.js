@@ -4,6 +4,29 @@ import stringify from 'json-stringify-safe'
 import {parse, parseFragment} from 'parse5'
 import {toParse5} from '../index.js'
 
+test('core', () => {
+  assert.deepEqual(
+    json(
+      toParse5({
+        type: 'root',
+        children: [
+          {type: 'doctype', name: 'html'},
+          {
+            type: 'element',
+            tagName: 'html',
+            children: [
+              {type: 'element', tagName: 'head', children: []},
+              {type: 'element', tagName: 'body', children: []}
+            ]
+          }
+        ]
+      })
+    ),
+    json(parse('<!doctypehtml>')),
+    'should transform a root (no-quirks)'
+  )
+})
+
 test('root', () => {
   assert.deepEqual(
     json(
@@ -356,7 +379,31 @@ test('svg', () => {
       )
     ),
     json(expectedSvgChild),
-    'should transform SVG'
+    'should transform SVG (given a space)'
+  )
+
+  const expectedSvgOptions = parseFragment(
+    '<svg><circle cx="60"  cy="60" r="50" fill="red"/></svg>'
+  ).childNodes[0]
+  assert(expectedSvgOptions && 'childNodes' in expectedSvg)
+  const expectedSvgOptionsChild = expectedSvg.childNodes[0]
+  // @ts-expect-error: p5 wants `null`.
+  expectedSvgChild.parentNode = undefined
+
+  assert.deepEqual(
+    json(
+      toParse5(
+        {
+          type: 'element',
+          tagName: 'circle',
+          properties: {cx: '60', cy: '60', r: '50', fill: 'red'},
+          children: []
+        },
+        {space: 'svg'}
+      )
+    ),
+    json(expectedSvgOptionsChild),
+    'should transform SVG (given options)'
   )
 })
 
