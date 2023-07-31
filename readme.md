@@ -8,7 +8,7 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[hast][] utility to generate [`parse5`][parse5]s [AST][parse5-node].
+[hast][] utility to transform to a [`parse5`][parse5] [AST][parse5-node].
 
 ## Contents
 
@@ -29,7 +29,7 @@
 
 ## What is this?
 
-This package is a utility that can turn a hast syntax tree into `parse5`s AST.
+This package is a utility that can turn a hast syntax tree into a `parse5` AST.
 Why not use a Parse5 adapter, you might ask?
 Well, because it’s more code weight to use adapters, and more fragile.
 
@@ -43,7 +43,7 @@ likely what you want.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+ and 16.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install hast-util-to-parse5
@@ -90,18 +90,18 @@ Yields:
 
 ## API
 
-This package exports the identifier [`toParse5`][toparse5].
+This package exports the identifier [`toParse5`][api-to-parse5].
 There is no default export.
 
 ### `toParse5(tree[, options])`
 
-Transform a hast tree to Parse5’s AST.
+Transform a hast tree to a `parse5` AST.
 
 ###### Parameters
 
 *   `tree` ([`HastNode`][hast-node])
     — tree to transform
-*   `options` ([`Options`][options], optional)
+*   `options` ([`Options`][api-options], optional)
     — configuration
 
 ###### Returns
@@ -114,7 +114,7 @@ Configuration (TypeScript type).
 
 ###### Fields
 
-*   `space` ([`Space`][space], optional)
+*   `space` ([`Space`][api-space], optional)
     — which space the document is in
 
 ### `Space`
@@ -130,14 +130,18 @@ type Space = 'html' | 'svg'
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types [`Options`][options] and [`Space`][space].
+It exports the additional types [`Options`][api-options] and
+[`Space`][api-space].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 14.14+ and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `hast-util-to-parse5@^7`,
+compatible with Node.js 12.
 
 ## Security
 
@@ -187,9 +191,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/hast-util-to-parse5
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/hast-util-to-parse5.svg
+[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=hast-util-to-parse5
 
-[size]: https://bundlephobia.com/result?p=hast-util-to-parse5
+[size]: https://bundlejs.com/?q=hast-util-to-parse5
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -233,8 +237,8 @@ abide by its terms.
 
 [hast-util-from-parse5]: https://github.com/syntax-tree/hast-util-from-parse5
 
-[toparse5]: #toparse5tree-options
+[api-to-parse5]: #toparse5tree-options
 
-[options]: #options
+[api-options]: #options
 
-[space]: #space
+[api-space]: #space
