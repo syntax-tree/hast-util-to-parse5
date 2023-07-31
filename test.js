@@ -396,30 +396,6 @@ test('svg', async function (t) {
     )
   })
 
-  await t.test('should transform SVG (given a space)', async function () {
-    const expected = parseFragment(
-      '<svg><circle cx="60"  cy="60" r="50" fill="red"/></svg>'
-    ).childNodes[0]
-    assert(expected && 'childNodes' in expected)
-    const expectedChild = expected.childNodes[0]
-    expectedChild.parentNode = null
-
-    assert.deepEqual(
-      json(
-        toParse5(
-          {
-            type: 'element',
-            tagName: 'circle',
-            properties: {cx: '60', cy: '60', r: '50', fill: 'red'},
-            children: []
-          },
-          'svg'
-        )
-      ),
-      json(expectedChild)
-    )
-  })
-
   await t.test('should transform SVG (given options)', async function () {
     const expected = parseFragment(
       '<svg><circle cx="60"  cy="60" r="50" fill="red"/></svg>'

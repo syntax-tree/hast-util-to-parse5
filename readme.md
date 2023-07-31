@@ -17,7 +17,7 @@
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`toParse5(tree[, space|options])`](#toparse5tree-spaceoptions)
+    *   [`toParse5(tree[, options])`](#toparse5tree-options)
     *   [`Options`](#options)
     *   [`Space`](#space)
 *   [Types](#types)
@@ -93,7 +93,7 @@ Yields:
 This package exports the identifier [`toParse5`][toparse5].
 There is no default export.
 
-### `toParse5(tree[, space|options])`
+### `toParse5(tree[, options])`
 
 Transform a hast tree to Parse5’s AST.
 
@@ -101,8 +101,6 @@ Transform a hast tree to Parse5’s AST.
 
 *   `tree` ([`HastNode`][hast-node])
     — tree to transform
-*   `space` ([`Space`][space], optional)
-    — same as `{space: space}`
 *   `options` ([`Options`][options], optional)
     — configuration
 
@@ -235,7 +233,7 @@ abide by its terms.
 
 [hast-util-from-parse5]: https://github.com/syntax-tree/hast-util-from-parse5
 
-[toparse5]: #toparse5tree-spaceoptions
+[toparse5]: #toparse5tree-options
 
 [options]: #options
 
