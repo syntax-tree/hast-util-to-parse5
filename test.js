@@ -17,13 +17,14 @@ test('toParse5', () => {
       toParse5({
         type: 'root',
         children: [
-          {type: 'doctype', name: 'html'},
+          {type: 'doctype'},
           {
             type: 'element',
             tagName: 'html',
+            properties: {},
             children: [
-              {type: 'element', tagName: 'head', children: []},
-              {type: 'element', tagName: 'body', children: []}
+              {type: 'element', tagName: 'head', properties: {}, children: []},
+              {type: 'element', tagName: 'body', properties: {}, children: []}
             ]
           }
         ]
@@ -44,9 +45,10 @@ test('root', () => {
           {
             type: 'element',
             tagName: 'html',
+            properties: {},
             children: [
-              {type: 'element', tagName: 'head', children: []},
-              {type: 'element', tagName: 'body', children: []}
+              {type: 'element', tagName: 'head', properties: {}, children: []},
+              {type: 'element', tagName: 'body', properties: {}, children: []}
             ]
           }
         ]
@@ -61,13 +63,14 @@ test('root', () => {
       toParse5({
         type: 'root',
         children: [
-          {type: 'doctype', name: 'html'},
+          {type: 'doctype'},
           {
             type: 'element',
             tagName: 'html',
+            properties: {},
             children: [
-              {type: 'element', tagName: 'head', children: []},
-              {type: 'element', tagName: 'body', children: []}
+              {type: 'element', tagName: 'head', properties: {}, children: []},
+              {type: 'element', tagName: 'body', properties: {}, children: []}
             ]
           }
         ]
@@ -84,7 +87,7 @@ test('doctype', () => {
   expected.parentNode = undefined
 
   assert.deepEqual(
-    toParse5({type: 'doctype', name: 'html'}),
+    toParse5({type: 'doctype'}),
     expected,
     'should transform a doctype (modern)'
   )
@@ -124,6 +127,7 @@ test('element', () => {
       toParse5({
         type: 'element',
         tagName: 'h1',
+        properties: {},
         children: [{type: 'text', value: 'Alpha'}]
       })
     ),
@@ -267,12 +271,14 @@ test('element', () => {
             {
               type: 'element',
               tagName: 'b',
+              properties: {},
               children: [{type: 'text', value: 'bold'}]
             },
             {type: 'text', value: ' and '},
             {
               type: 'element',
               tagName: 'i',
+              properties: {},
               children: [{type: 'text', value: 'italic'}]
             }
           ]
@@ -301,6 +307,7 @@ test('position', () => {
       toParse5({
         type: 'element',
         tagName: 'h1',
+        properties: {},
         children: [
           {
             type: 'text',
