@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import stringify from 'json-stringify-safe'
+import {toParse5} from 'hast-util-to-parse5'
 import {parse, parseFragment} from 'parse5'
-import {toParse5} from './index.js'
 
 test('toParse5', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('./index.js')).sort(), [
+    assert.deepEqual(Object.keys(await import('hast-util-to-parse5')).sort(), [
       'toParse5'
     ])
   })
