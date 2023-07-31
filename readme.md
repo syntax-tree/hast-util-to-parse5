@@ -52,14 +52,14 @@ npm install hast-util-to-parse5
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {toParse5} from 'https://esm.sh/hast-util-to-parse5@7'
+import {toParse5} from 'https://esm.sh/hast-util-to-parse5@8'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {toParse5} from 'https://esm.sh/hast-util-to-parse5@7?bundle'
+  import {toParse5} from 'https://esm.sh/hast-util-to-parse5@8?bundle'
 </script>
 ```
 
